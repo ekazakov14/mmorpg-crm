@@ -29,11 +29,7 @@ export class UsersController {
 
   @UseInterceptors(HideConfidentialCredentialsInterceptor)
   @Post()
-  public create(@Body() { username, email, password }: User): Promise<User> {
-    const user = new User();
-    user.username = username;
-    user.email = email;
-    user.password = password;
+  public create(@Body() user: User): Promise<User> {
     return this.usersService.create(user);
   }
 
