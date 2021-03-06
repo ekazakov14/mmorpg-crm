@@ -15,12 +15,24 @@ export class UsersService {
     user.username = username;
     user.email = email;
     user.password = password;
-    
+
     return this.userRepository.save(user);
   }
 
-  public find(id: User['id']) {
+  public find(id: User['id']): Promise<User> {
     return this.userRepository.findOneOrFail(id);
+  }
+
+  public findByUsername(username: User['username']): Promise<User> {
+    return this.userRepository.findOne({
+      username,
+    });
+  }
+
+  public findByEmail(email: User['email']) {
+    return this.userRepository.findOne({
+      email,
+    });
   }
 
   public findAll(): Promise<User[]> {
