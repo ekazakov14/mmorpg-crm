@@ -6,6 +6,8 @@ import { AppService } from './app.service';
 import { UsersModule } from './modules/users/users.module';
 import { AuthModule } from './modules/auth/auth.module';
 import { ConfigModule } from '@nestjs/config';
+import { ServeStaticModule } from '@nestjs/serve-static';
+import { join } from 'path';
 
 @Module({
   imports: [
@@ -15,6 +17,9 @@ import { ConfigModule } from '@nestjs/config';
         ...getConnectionOptions(),
         autoLoadEntities: true,
       }),
+    }),
+    ServeStaticModule.forRoot({
+      rootPath: join(__dirname, '..', 'frontend'),
     }),
     UsersModule,
     AuthModule,
