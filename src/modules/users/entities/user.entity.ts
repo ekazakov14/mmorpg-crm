@@ -5,13 +5,14 @@ import {
   Entity,
   PrimaryGeneratedColumn,
 } from 'typeorm';
+import { IUser, UserRoles } from './user.interface';
 import { PropertiesKeysOf } from 'src/commons/types/PropertiesKeysOf';
 import { hashPassword } from 'src/commons/hashPassword';
 
 @Entity({
   name: 'users',
 })
-export class User {
+export class User implements IUser {
   static confidencialCredentials: PropertiesKeysOf<User>[] = ['password'];
 
   @PrimaryGeneratedColumn()
@@ -29,6 +30,13 @@ export class User {
 
   @Column()
   public password: string;
+
+  @Column({
+    type: 'enum',
+    enum: UserRoles,
+    default: UserRoles.USER,
+  })
+  public role: UserRoles;
 
   @BeforeUpdate()
   @BeforeInsert()
