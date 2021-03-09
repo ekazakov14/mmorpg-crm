@@ -30,7 +30,7 @@ export class AuthService {
     const isValidCredentials = comparePassword(password, user.password);
 
     if (isValidCredentials) {
-      const accessToken = this.jwtService.sign({user});
+      const accessToken = this.jwtService.sign({ user });
 
       return {
         access_token: accessToken,
