@@ -3,11 +3,13 @@ import {
   BeforeUpdate,
   Column,
   Entity,
+  ManyToOne,
   PrimaryGeneratedColumn,
 } from 'typeorm';
 import { IUser, UserRoles } from './user.interface';
 import { PropertiesKeysOf } from 'src/commons/types/PropertiesKeysOf';
 import { hashPassword } from 'src/commons/hashPassword';
+import { Workspace } from 'src/modules/workspaces/entities/workspace.entity';
 
 @Entity({
   name: 'users',
@@ -37,6 +39,11 @@ export class User implements IUser {
     default: UserRoles.USER,
   })
   public role: UserRoles;
+
+  @ManyToOne(() => Workspace, (workspace: Workspace) => workspace.users, {
+    onDelete: 'SET NULL',
+  })
+  public workspace?: Workspace;
 
   @BeforeUpdate()
   @BeforeInsert()

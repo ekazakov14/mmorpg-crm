@@ -8,6 +8,7 @@ import { AuthModule } from './modules/auth/auth.module';
 import { ConfigModule } from '@nestjs/config';
 import { ServeStaticModule } from '@nestjs/serve-static';
 import { join } from 'path';
+import { WorkspacesModule } from './modules/workspaces/workspaces.module';
 
 @Module({
   imports: [
@@ -23,6 +24,7 @@ import { join } from 'path';
     }),
     UsersModule,
     AuthModule,
+    WorkspacesModule,
   ],
   controllers: [AppController],
   providers: [AppService],
