@@ -19,7 +19,7 @@ import { WorkspacesModule } from './modules/workspaces/workspaces.module';
       }),
     }),
     ServeStaticModule.forRoot({
-      rootPath: join(__dirname, '..', 'frontend'),
+      rootPath: join(__dirname, '../..', 'frontend/build'),
     }),
     UsersModule,
     AuthModule,
