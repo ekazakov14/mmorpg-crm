@@ -3,6 +3,7 @@ import { JwtService } from '@nestjs/jwt';
 import { comparePassword } from 'src/commons/comparePassword';
 import { User } from '../users/entities/user.entity';
 import { UsersService } from '../users/users.service';
+import { LoginDto } from './controllers/dto';
 
 @Injectable()
 export class AuthService {
@@ -11,14 +12,14 @@ export class AuthService {
     private readonly jwtService: JwtService,
   ) {}
 
-  public async login({ username, email, password }: User) {
+  public async login({ login, password }: LoginDto) {
     let user: User;
-    const userByUsername = await this.userService.findByUsername(username);
+    const userByUsername = await this.userService.findByUsername(login);
 
     if (userByUsername) {
       user = userByUsername;
     } else {
-      const userByEmail = await this.userService.findByEmail(email);
+      const userByEmail = await this.userService.findByEmail(login);
 
       if (userByEmail) {
         user = userByEmail;
@@ -27,7 +28,7 @@ export class AuthService {
       }
     }
 
-    const isValidCredentials = comparePassword(password, user.password);
+    const isValidCredentials = await comparePassword(password, user.password);
 
     if (isValidCredentials) {
       const accessToken = this.jwtService.sign({ user });
@@ -41,6 +42,6 @@ export class AuthService {
   }
 
   public register(user: User) {
-    this.userService.create(user);
+    return this.userService.create(user);
   }
 }

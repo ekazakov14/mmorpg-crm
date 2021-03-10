@@ -12,5 +12,5 @@ export class Workspace {
   public name: string;
 
   @OneToMany(() => User, (user: User) => user.workspace)
-  public users: User[];
+  public users?: User[];
 }
