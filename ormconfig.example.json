@@ -1,0 +1,31 @@
+[
+  {
+    "type": "mysql",
+    "host": "localhost",
+    "port": 3306,
+    "username": "username",
+    "password": "password",
+    "database": "node",
+    "entities": ["dist/**/*.entity{.ts,.js}"],
+    "synchronize": true,
+    "migrations": ["dist/**/db/migrations/*{.ts,.js}"],
+    "cli": {
+      "migrationsDir": "src/db/migrations"
+    }
+  },
+  {
+    "name": "seed",
+    "type": "mysql",
+    "host": "localhost",
+    "port": 3306,
+    "username": "username",
+    "password": "password",
+    "database": "node",
+    "entities": ["dist/**/*.entity{.ts,.js}"],
+    "synchronize": true,
+    "migrations": ["dist/**/db/seeds/*{.ts,.js}"],
+    "cli": {
+      "migrationsDir": "src/db/seeds"
+    }
+  }
+]
