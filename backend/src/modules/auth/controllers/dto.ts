@@ -12,4 +12,9 @@ export class LoginDto {
   public readonly password: string;
 }
 
+export class LoginOkResponse {
+  @ApiProperty()
+  public readonly access_token: string;
+}
+
 export class RegisterDto extends CreateDto {}
