@@ -1,6 +1,5 @@
 import { Body, Controller, Post } from '@nestjs/common';
 import {
-  ApiBadRequestResponse,
   ApiOkResponse,
   ApiOperation,
   ApiTags,
