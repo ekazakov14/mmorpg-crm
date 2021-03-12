@@ -5,8 +5,6 @@ import { AppService } from './app.service';
 import { UsersModule } from './modules/users/users.module';
 import { AuthModule } from './modules/auth/auth.module';
 import { ConfigModule } from '@nestjs/config';
-import { ServeStaticModule } from '@nestjs/serve-static';
-import { join } from 'path';
 import { WorkspacesModule } from './modules/workspaces/workspaces.module';
 
 @Module({
@@ -17,9 +15,6 @@ import { WorkspacesModule } from './modules/workspaces/workspaces.module';
         ...getConnectionOptions(),
         autoLoadEntities: true,
       }),
-    }),
-    ServeStaticModule.forRoot({
-      rootPath: join(__dirname, '../..', 'frontend/build'),
     }),
     UsersModule,
     AuthModule,
