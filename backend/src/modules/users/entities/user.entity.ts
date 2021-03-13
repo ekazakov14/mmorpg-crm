@@ -48,6 +48,8 @@ export class User implements IUser {
   @BeforeUpdate()
   @BeforeInsert()
   public async hashPassword(): Promise<void> {
-    this.password = await hashPassword(this.password);
+    if (this.password?.length) {
+      this.password = await hashPassword(this.password);
+    }
   }
 }
