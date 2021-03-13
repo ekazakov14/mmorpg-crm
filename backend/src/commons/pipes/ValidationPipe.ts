@@ -5,18 +5,17 @@ import {
   ValidationPipeOptions,
 } from '@nestjs/common';
 
-const defaultOptions = {
+const defaultOptions: ValidationPipeOptions = {
   exceptionFactory: (e) => new BadRequestException(e),
+  whitelist: true,
 };
 
 @Injectable()
 export class ValidationPipe extends V {
   constructor(options: ValidationPipeOptions = {}) {
-    const resultOptions: ValidationPipeOptions = {
+    super({
       ...defaultOptions,
       ...options,
-    };
-
-    super(resultOptions);
+    });
   }
 }
