@@ -1,5 +1,6 @@
-import { Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
+import { plainToClass } from 'class-transformer';
 import { Repository } from 'typeorm';
 import { User } from './entities/user.entity';
 
@@ -21,7 +22,7 @@ export class UsersService {
     return savedUser;
   }
 
-  public async getUserPassword(id: User['id']) {
+  public async getUserPassword(id: number): Promise<string> {
     const { password } = await this.userRepository.findOneOrFail({
       where: { id },
       select: ['password'],
@@ -30,20 +31,16 @@ export class UsersService {
     return password;
   }
 
-  public find(id: User['id']): Promise<User> {
+  public find(id: number): Promise<User> {
     return this.userRepository.findOneOrFail(id);
   }
 
-  public findByUsername(username: User['username']): Promise<User> {
-    return this.userRepository.findOne({
-      username,
-    });
+  public findByUsername(username: string): Promise<User> {
+    return this.userRepository.findOne({ username });
   }
 
-  public findByEmail(email: User['email']) {
-    return this.userRepository.findOne({
-      email,
-    });
+  public findByEmail(email: string): Promise<User> {
+    return this.userRepository.findOne({ email });
   }
 
   public findAll(): Promise<User[]> {
@@ -51,18 +48,22 @@ export class UsersService {
     return users;
   }
 
-  public async update(id: User['id'], updates: Partial<User>): Promise<any> {
-    const user = await this.find(id);
+  public async update(id: number, updates: Partial<User>): Promise<void> {
+    const user = plainToClass(User, updates);
+    user.id = id;
 
-    // update fields in exisiting user class instance
-    Object.keys(updates).forEach((key) => (user[key] = updates[key]));
+    const result = await this.userRepository.update(id, user);
 
-    await this.userRepository.update(id, user);
-
-    return user;
+    if (!result.affected) {
+      throw new BadRequestException('User not found');
+    }
   }
 
-  public delete(id: User['id']): void {
-    this.userRepository.delete(id);
+  public async delete(id: number): Promise<void> {
+    const result = await this.userRepository.delete(id);
+
+    if (!result.affected) {
+      throw new BadRequestException('User not found');
+    }
   }
 }
