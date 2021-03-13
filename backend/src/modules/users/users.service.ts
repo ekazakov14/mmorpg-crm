@@ -11,12 +11,7 @@ export class UsersService {
     private readonly userRepository: Repository<User>,
   ) {}
 
-  public async create({ username, email, password }: User): Promise<User> {
-    const user = new User();
-    user.username = username;
-    user.email = email;
-    user.password = password;
-
+  public async create(user: User): Promise<User> {
     const savedUser = await this.userRepository.save(user);
     delete savedUser.password;
     return savedUser;

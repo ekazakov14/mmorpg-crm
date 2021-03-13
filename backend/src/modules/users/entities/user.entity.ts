@@ -39,6 +39,9 @@ export class User implements IUser {
   @ApiProperty({ enum: UserRoles })
   public role: UserRoles;
 
+  @Column({ nullable: true })
+  public workspaceId: number;
+
   @ManyToOne(() => Workspace, (workspace: Workspace) => workspace.users, {
     onDelete: 'SET NULL',
   })

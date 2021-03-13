@@ -1,6 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { IsString } from 'class-validator';
-import { CreateDto } from 'src/modules/users/controllers/dto';
+import { UserCreateDto } from 'src/modules/users/controllers/dto';
 
 export class LoginDto {
   @IsString()
@@ -17,4 +17,4 @@ export class LoginOkResponse {
   public readonly access_token: string;
 }
 
-export class RegisterDto extends CreateDto {}
+export class RegisterDto extends UserCreateDto {}
