@@ -10,13 +10,24 @@ export class UsersService {
     private readonly userRepository: Repository<User>,
   ) {}
 
-  public create({ username, email, password }: User): Promise<User> {
+  public async create({ username, email, password }: User): Promise<User> {
     const user = new User();
     user.username = username;
     user.email = email;
     user.password = password;
 
-    return this.userRepository.save(user);
+    const savedUser = await this.userRepository.save(user);
+    delete savedUser.password;
+    return savedUser;
+  }
+
+  public async getUserPassword(id: User['id']) {
+    const { password } = await this.userRepository.findOneOrFail({
+      where: { id },
+      select: ['password'],
+    });
+
+    return password;
   }
 
   public find(id: User['id']): Promise<User> {

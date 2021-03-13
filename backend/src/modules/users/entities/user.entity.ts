@@ -7,7 +7,6 @@ import {
   PrimaryGeneratedColumn,
 } from 'typeorm';
 import { IUser, UserRoles } from './user.interface';
-import { PropertiesKeysOf } from 'src/commons/types/PropertiesKeysOf';
 import { hashPassword } from 'src/commons/hashPassword';
 import { Workspace } from 'src/modules/workspaces/entities/workspace.entity';
 import { ApiProperty } from '@nestjs/swagger';
@@ -16,25 +15,19 @@ import { ApiProperty } from '@nestjs/swagger';
   name: 'users',
 })
 export class User implements IUser {
-  static confidencialCredentials: PropertiesKeysOf<User>[] = ['password'];
-
   @PrimaryGeneratedColumn()
   @ApiProperty()
   public id: number;
 
-  @Column({
-    unique: true,
-  })
+  @Column({ unique: true })
   @ApiProperty()
   public username: string;
 
-  @Column({
-    unique: true,
-  })
+  @Column({ unique: true })
   @ApiProperty()
   public email: string;
 
-  @Column()
+  @Column({ select: false })
   @ApiProperty()
   public password: string;
 
@@ -43,17 +36,13 @@ export class User implements IUser {
     enum: UserRoles,
     default: UserRoles.USER,
   })
-  @ApiProperty({
-    enum: UserRoles,
-  })
+  @ApiProperty({ enum: UserRoles })
   public role: UserRoles;
 
   @ManyToOne(() => Workspace, (workspace: Workspace) => workspace.users, {
     onDelete: 'SET NULL',
   })
-  @ApiProperty({
-    required: false,
-  })
+  @ApiProperty({ required: false })
   public workspace?: Workspace;
 
   @BeforeUpdate()

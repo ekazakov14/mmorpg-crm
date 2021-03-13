@@ -28,7 +28,8 @@ export class AuthService {
       }
     }
 
-    const isValidCredentials = await comparePassword(password, user.password);
+    const userPassword = await this.userService.getUserPassword(user.id);
+    const isValidCredentials = await comparePassword(password, userPassword);
 
     if (isValidCredentials) {
       const accessToken = this.jwtService.sign({ user });
