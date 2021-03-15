@@ -8,6 +8,7 @@ import {
   Post,
 } from '@nestjs/common';
 import {
+  ApiBadRequestResponse,
   ApiBearerAuth,
   ApiCreatedResponse,
   ApiNotFoundResponse,
@@ -37,11 +38,10 @@ export class WorkspacesController {
     return this.workspacesService.findAll();
   }
 
-  @Get(':id(\\d+)')
+  @Get(':id')
   @ApiOperation({ summary: 'get one workspace' })
   @ApiOkResponse({ type: Workspace })
-  @ApiNotFoundResponse()
-  @ApiBearerAuth()
+  @ApiNotFoundResponse({ description: 'workspace not found' })
   public get(@Param('id') id: number): Promise<Workspace> {
     return this.workspacesService.find(id);
   }
@@ -50,6 +50,7 @@ export class WorkspacesController {
   @hasRole(UserRoles.ADMIN)
   @ApiOperation({ summary: 'create one workspace' })
   @ApiCreatedResponse({ type: Workspace })
+  @ApiBadRequestResponse()
   public create(
     @Body(new ValidationPipe()) data: CreateDto,
   ): Promise<Workspace> {
@@ -57,17 +58,20 @@ export class WorkspacesController {
     return this.workspacesService.create(workspace);
   }
 
-  @Get(':id(\\d+)/users')
+  @Get(':id/users')
   @ApiOperation({ summary: 'get users of one workspace' })
   @ApiOkResponse({ type: [User] })
+  @ApiNotFoundResponse({ description: 'workspace not found' })
   @ApiBearerAuth()
   public users(@Param('id') id: number): Promise<User[]> {
     return this.workspacesService.users(id);
   }
 
-  @Patch(':id(\\d+)')
+  @Patch(':id')
   @hasRole(UserRoles.ADMIN)
   @ApiOperation({ summary: 'update one workspace' })
+  @ApiOkResponse()
+  @ApiNotFoundResponse({ description: 'workspace not found' })
   public update(
     @Param('id') id: number,
     @Body(new ValidationPipe()) updates: UpdateDto,
@@ -76,9 +80,11 @@ export class WorkspacesController {
     return this.workspacesService.update(id, workspace);
   }
 
-  @Delete(':id(\\d+)')
+  @Delete(':id')
   @hasRole(UserRoles.ADMIN)
   @ApiOperation({ summary: 'delete one workspace' })
+  @ApiOkResponse()
+  @ApiNotFoundResponse({ description: 'workspace not found' })
   public delete(@Param('id') id: number): Promise<void> {
     return this.workspacesService.delete(id);
   }
