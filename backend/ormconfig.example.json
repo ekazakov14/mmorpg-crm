@@ -11,7 +11,9 @@
     "migrations": ["dist/**/db/migrations/*{.ts,.js}"],
     "cli": {
       "migrationsDir": "src/db/migrations"
-    }
+    },
+    "logging": ["error"],
+    "logger": "file"
   },
   {
     "name": "seed",
@@ -23,9 +25,11 @@
     "database": "node",
     "entities": ["dist/**/*.entity{.ts,.js}"],
     "synchronize": true,
-    "migrations": ["dist/**/db/seeds/*{.ts,.js}"],
+    "migrations": ["dist/db/seeds/index.js"],
     "cli": {
       "migrationsDir": "src/db/seeds"
-    }
+    },
+    "logging": ["error"],
+    "logger": "file"
   }
 ]
