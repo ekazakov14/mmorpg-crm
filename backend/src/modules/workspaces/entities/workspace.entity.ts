@@ -15,6 +15,6 @@ export class Workspace {
   public name: string;
 
   @OneToMany(() => User, (user: User) => user.workspace)
-  @ApiProperty()
+  @ApiProperty({ type: () => User })
   public users?: User[];
 }
