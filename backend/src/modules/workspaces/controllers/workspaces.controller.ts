@@ -8,17 +8,19 @@ import {
   Post,
 } from '@nestjs/common';
 import {
-  ApiBadRequestResponse,
   ApiBearerAuth,
-  ApiCreatedResponse,
   ApiNotFoundResponse,
   ApiOkResponse,
   ApiOperation,
   ApiTags,
 } from '@nestjs/swagger';
 import { plainToClass } from 'class-transformer';
+import { EntityCreate } from 'src/commons/decorators/base-controller-methods/EntityCreate';
+import { EntityDelete } from 'src/commons/decorators/base-controller-methods/EntityDelete';
+import { EntityGet } from 'src/commons/decorators/base-controller-methods/EntityGet';
+import { EntityIndex } from 'src/commons/decorators/base-controller-methods/EntityIndex';
+import { EntityUpdate } from 'src/commons/decorators/base-controller-methods/EntityUpdate';
 import { ValidationPipe } from 'src/commons/pipes/ValidationPipe';
-import { hasRole } from 'src/modules/auth/decorators/hasRole.decorator';
 import { User } from 'src/modules/users/entities/user.entity';
 import { UserRoles } from 'src/modules/users/entities/user.interface';
 import { Workspace } from '../entities/workspace.entity';
@@ -31,47 +33,26 @@ export class WorkspacesController {
   constructor(private readonly workspacesService: WorkspacesService) {}
 
   @Get()
-  @hasRole(UserRoles.ADMIN)
-  @ApiOperation({ summary: 'get all workspaces' })
-  @ApiOkResponse({ type: [Workspace] })
-  public async index(): Promise<Workspace[]> {
+  @EntityIndex(Workspace, UserRoles.ADMIN)
+  public async index() {
     return this.workspacesService.findAll();
   }
 
   @Get(':id')
-  @ApiOperation({ summary: 'get one workspace' })
-  @ApiOkResponse({ type: Workspace })
-  @ApiNotFoundResponse({ description: 'workspace not found' })
-  public get(@Param('id') id: number): Promise<Workspace> {
+  @EntityGet(Workspace)
+  public get(@Param('id') id: number) {
     return this.workspacesService.find(id);
   }
 
   @Post()
-  @hasRole(UserRoles.ADMIN)
-  @ApiOperation({ summary: 'create one workspace' })
-  @ApiCreatedResponse({ type: Workspace })
-  @ApiBadRequestResponse()
-  public create(
-    @Body(new ValidationPipe()) data: CreateDto,
-  ): Promise<Workspace> {
+  @EntityCreate(Workspace, UserRoles.ADMIN)
+  public create(@Body(new ValidationPipe()) data: CreateDto) {
     const workspace = plainToClass(Workspace, data);
     return this.workspacesService.create(workspace);
   }
 
-  @Get(':id/users')
-  @ApiOperation({ summary: 'get users of one workspace' })
-  @ApiOkResponse({ type: [User] })
-  @ApiNotFoundResponse({ description: 'workspace not found' })
-  @ApiBearerAuth()
-  public users(@Param('id') id: number): Promise<User[]> {
-    return this.workspacesService.users(id);
-  }
-
   @Patch(':id')
-  @hasRole(UserRoles.ADMIN)
-  @ApiOperation({ summary: 'update one workspace' })
-  @ApiOkResponse()
-  @ApiNotFoundResponse({ description: 'workspace not found' })
+  @EntityUpdate(Workspace, UserRoles.ADMIN)
   public update(
     @Param('id') id: number,
     @Body(new ValidationPipe()) updates: UpdateDto,
@@ -81,11 +62,17 @@ export class WorkspacesController {
   }
 
   @Delete(':id')
-  @hasRole(UserRoles.ADMIN)
-  @ApiOperation({ summary: 'delete one workspace' })
-  @ApiOkResponse()
-  @ApiNotFoundResponse({ description: 'workspace not found' })
-  public delete(@Param('id') id: number): Promise<void> {
+  @EntityDelete(Workspace, UserRoles.ADMIN)
+  public delete(@Param('id') id: number) {
     return this.workspacesService.delete(id);
+  }
+
+  @Get(':id/users')
+  @ApiOperation({ summary: 'get users of one workspace' })
+  @ApiOkResponse({ type: [User] })
+  @ApiNotFoundResponse({ description: 'workspace not found' })
+  @ApiBearerAuth()
+  public users(@Param('id') id: number): Promise<User[]> {
+    return this.workspacesService.users(id);
   }
 }
