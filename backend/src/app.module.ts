@@ -11,10 +11,15 @@ import { WorkspacesModule } from './modules/workspaces/workspaces.module';
   imports: [
     ConfigModule.forRoot(),
     TypeOrmModule.forRootAsync({
-      useFactory: async () => ({
-        ...getConnectionOptions(),
-        autoLoadEntities: true,
-      }),
+      useFactory: async () => {
+        const options = await getConnectionOptions();
+
+        return Promise.resolve({
+          ...options,
+          entities: [__dirname + '/**/*.entity.{ts,js}'],
+          autoLoadEntities: true,
+        });
+      },
     }),
     UsersModule,
     AuthModule,
