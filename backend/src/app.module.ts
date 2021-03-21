@@ -1,30 +1,35 @@
 import { Module } from '@nestjs/common';
-import { TypeOrmModule } from '@nestjs/typeorm';
-import { getConnectionOptions } from 'typeorm';
-import { AppService } from './app.service';
+import { TypeOrmModule, TypeOrmModuleOptions } from '@nestjs/typeorm';
 import { UsersModule } from './modules/users/users.module';
 import { AuthModule } from './modules/auth/auth.module';
-import { ConfigModule } from '@nestjs/config';
+import { ConfigModule, ConfigService } from '@nestjs/config';
 import { WorkspacesModule } from './modules/workspaces/workspaces.module';
 
 @Module({
   imports: [
     ConfigModule.forRoot(),
     TypeOrmModule.forRootAsync({
-      useFactory: async () => {
-        const options = await getConnectionOptions();
-
-        return Promise.resolve({
-          ...options,
+      imports: [ConfigModule],
+      inject: [ConfigService],
+      useFactory: (config: ConfigService) => {
+        const options: TypeOrmModuleOptions = {
+          type: config.get<any>('DB_TYPE'),
+          host: config.get<any>('DB_HOST'),
+          port: config.get<any>('DB_PORT'),
+          database: config.get<any>('MYSQL_DATABASE'),
+          username: config.get<any>('MYSQL_USER'),
+          password: config.get<any>('MYSQL_PASSWORD'),
           entities: [__dirname + '/**/*.entity.{ts,js}'],
           autoLoadEntities: true,
-        });
+          synchronize: true,
+        };
+
+        return options;
       },
     }),
     UsersModule,
     AuthModule,
     WorkspacesModule,
   ],
-  providers: [AppService],
 })
 export class AppModule {}
