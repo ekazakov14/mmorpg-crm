@@ -8,23 +8,26 @@ up:
 down:
 	$(docker_compose_bin) down
 
-install:
+install: up
 	$(docker_compose_bin) exec "$(BACKEND_CONTAINER_NAME)" yarn install
 	$(docker_compose_bin) exec "$(FRONTEND_CONTAINER_NAME)" yarn install
 
-backend-dev:
+backend-dev: install
 	$(docker_compose_bin) exec "$(BACKEND_CONTAINER_NAME)" yarn start:debug
 
-frontend-dev:
+frontend-dev: install
 	$(docker_compose_bin) exec "$(FRONTEND_CONTAINER_NAME)" yarn start
 
-backend-test:
-	$(docker_compose_bin) exec "$(BACKEND_CONTAINER_NAME)" yarn test
-	$(docker_compose_bin) exec "$(BACKEND_CONTAINER_NAME)" yarn test:e2e
-
-frontend-test:
+backend-test: install
 	$(docker_compose_bin) exec "$(BACKEND_CONTAINER_NAME)" yarn test
 
-production:
+frontend-test: install
+	$(docker_compose_bin) exec "$(BACKEND_CONTAINER_NAME)" yarn test
+
+e2e:
+	$(docker_compose_bin) -f docker-compose.e2e.yml up --abort-on-container-exit
+	$(docker_compose_bin) -f docker-compose.e2e.yml down
+
+production: intall
 	$(docker_compose_bin) exec "$(FRONTEND_CONTAINER_NAME)" yarn build
 	$(docker_compose_bin) exec "$(BACKEND_CONTAINER_NAME)" yarn start:prod
