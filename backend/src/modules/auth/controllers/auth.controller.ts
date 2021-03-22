@@ -1,4 +1,4 @@
-import { Body, Controller, Post } from '@nestjs/common';
+import { Body, Controller, HttpCode, Post } from '@nestjs/common';
 import {
   ApiOkResponse,
   ApiOperation,
@@ -17,6 +17,7 @@ export class AuthController {
   constructor(private readonly authService: AuthService) {}
 
   @Post('login')
+  @HttpCode(200)
   @ApiOperation({ summary: 'login user and return access_token' })
   @ApiOkResponse({ type: LoginOkResponse })
   @ApiUnauthorizedResponse({ description: 'Invalid credentials' })
