@@ -25,8 +25,7 @@ frontend-test: install
 	$(docker_compose_bin) exec "$(BACKEND_CONTAINER_NAME)" yarn test
 
 e2e:
-	$(docker_compose_bin) -f docker-compose.e2e.yml up --abort-on-container-exit
-	$(docker_compose_bin) -f docker-compose.e2e.yml down
+	$(docker_compose_bin) -f docker-compose.e2e.yml up --abort-on-container-exit --force-recreate -V
 
 production: intall
 	$(docker_compose_bin) exec "$(FRONTEND_CONTAINER_NAME)" yarn build
