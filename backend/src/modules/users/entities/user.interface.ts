@@ -1,6 +1,6 @@
-import { Workspace } from 'src/modules/workspaces/entities/workspace.entity';
+import { Workspace } from '../../workspaces/entities/workspace.entity';
 
-enum UserRoles {
+export enum UserRoles {
   ADMIN = 'admin',
   WORKSPACE_LEADER = 'workspace_leader',
   USER = 'user',
@@ -14,4 +14,4 @@ interface IUser {
   workspace?: Workspace;
 }
 
-export { IUser, UserRoles };
+export type { IUser };

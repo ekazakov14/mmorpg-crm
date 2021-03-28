@@ -7,9 +7,9 @@ import {
   PrimaryGeneratedColumn,
 } from 'typeorm';
 import { IUser, UserRoles } from './user.interface';
-import { hashPassword } from 'src/commons/hashPassword';
-import { Workspace } from 'src/modules/workspaces/entities/workspace.entity';
 import { ApiProperty } from '@nestjs/swagger';
+import { Workspace } from '../../workspaces/entities/workspace.entity';
+import { hashPassword } from '../../../commons/hashPassword';
 
 @Entity({
   name: 'users',

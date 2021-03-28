@@ -15,14 +15,14 @@ import {
   ApiTags,
 } from '@nestjs/swagger';
 import { plainToClass } from 'class-transformer';
-import { EntityCreate } from 'src/commons/decorators/base-controller-methods/EntityCreate';
-import { EntityDelete } from 'src/commons/decorators/base-controller-methods/EntityDelete';
-import { EntityGet } from 'src/commons/decorators/base-controller-methods/EntityGet';
-import { EntityIndex } from 'src/commons/decorators/base-controller-methods/EntityIndex';
-import { EntityUpdate } from 'src/commons/decorators/base-controller-methods/EntityUpdate';
-import { ValidationPipe } from 'src/commons/pipes/ValidationPipe';
-import { User } from 'src/modules/users/entities/user.entity';
-import { UserRoles } from 'src/modules/users/entities/user.interface';
+import { EntityCreate } from '../../../commons/decorators/base-controller-methods/EntityCreate';
+import { EntityDelete } from '../../../commons/decorators/base-controller-methods/EntityDelete';
+import { EntityGet } from '../../../commons/decorators/base-controller-methods/EntityGet';
+import { EntityIndex } from '../../../commons/decorators/base-controller-methods/EntityIndex';
+import { EntityUpdate } from '../../../commons/decorators/base-controller-methods/EntityUpdate';
+import { ValidationPipe } from '../../../commons/pipes/ValidationPipe';
+import { User } from '../../../modules/users/entities/user.entity';
+import { UserRoles } from '../../../modules/users/entities/user.interface';
 import { Workspace } from '../entities/workspace.entity';
 import { WorkspacesService } from '../workspaces.service';
 import { CreateDto, UpdateDto } from './dto';

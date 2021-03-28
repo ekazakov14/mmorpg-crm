@@ -2,8 +2,8 @@ import { HttpStatus, INestApplication } from '@nestjs/common';
 import { Test } from '@nestjs/testing';
 import { AppModule } from '../src/app.module';
 import * as request from 'supertest';
-import { User } from 'src/modules/users/entities/user.entity';
-import { UserRoles } from 'src/modules/users/entities/user.interface';
+import { User } from '../src/modules/users/entities/user.entity';
+import { UserRoles } from '../src/modules/users/entities/user.interface';
 
 describe('AuthController', () => {
   let app: INestApplication;

@@ -1,6 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { IsString } from 'class-validator';
-import { UserCreateDto } from 'src/modules/users/controllers/dto';
+import { UserCreateDto } from '../../users/controllers/dto';
 
 export class LoginDto {
   @IsString()

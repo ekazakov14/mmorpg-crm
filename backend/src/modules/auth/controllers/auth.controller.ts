@@ -6,8 +6,8 @@ import {
   ApiUnauthorizedResponse,
 } from '@nestjs/swagger';
 import { plainToClass } from 'class-transformer';
-import { ValidationPipe } from 'src/commons/pipes/ValidationPipe';
-import { User } from 'src/modules/users/entities/user.entity';
+import { ValidationPipe } from '../../../commons/pipes/ValidationPipe';
+import { User } from '../../users/entities/user.entity';
 import { AuthService } from '../auth.service';
 import { LoginDto, LoginOkResponse, RegisterDto } from './dto';
 

@@ -1,6 +1,6 @@
 import { MigrationInterface, QueryRunner } from 'typeorm';
 import * as faker from 'faker';
-import { Workspace } from 'src/modules/workspaces/entities/workspace.entity';
+import { Workspace } from '../../entities/workspace.entity';
 
 export class WorkspaceSeeder implements MigrationInterface {
   public rowsCount = 4;

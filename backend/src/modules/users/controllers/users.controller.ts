@@ -9,8 +9,8 @@ import {
 } from '@nestjs/common';
 import { ApiBearerAuth, ApiOperation, ApiTags } from '@nestjs/swagger';
 import { plainToClass } from 'class-transformer';
-import { ValidationPipe } from 'src/commons/pipes/ValidationPipe';
-import { hasRole } from 'src/modules/auth/decorators/hasRole.decorator';
+import { ValidationPipe } from '../../../commons/pipes/ValidationPipe';
+import { hasRole } from '../../auth/decorators/hasRole.decorator';
 import { User } from '../entities/user.entity';
 import { UserRoles } from '../entities/user.interface';
 import { UsersService } from '../users.service';

@@ -1,8 +1,8 @@
 import { MigrationInterface, QueryRunner } from 'typeorm';
 import * as faker from 'faker';
-import { User } from 'src/modules/users/entities/user.entity';
-import { UserRoles } from 'src/modules/users/entities/user.interface';
-import { Workspace } from 'src/modules/workspaces/entities/workspace.entity';
+import { User } from '../../../../modules/users/entities/user.entity';
+import { UserRoles } from '../../entities/user.interface';
+import { Workspace } from '../../../workspaces/entities/workspace.entity';
 
 export class UserSeeder implements MigrationInterface {
   public usersCount = 50;
