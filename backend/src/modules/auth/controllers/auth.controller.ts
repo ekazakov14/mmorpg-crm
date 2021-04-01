@@ -21,7 +21,9 @@ export class AuthController {
   @ApiOperation({ summary: 'login user and return access_token' })
   @ApiOkResponse({ type: LoginOkResponse })
   @ApiUnauthorizedResponse({ description: 'Invalid credentials' })
-  public login(@Body(new ValidationPipe()) data: LoginDto) {
+  public login(
+    @Body(new ValidationPipe()) data: LoginDto,
+  ): Promise<LoginResponse> {
     return this.authService.login(data);
   }
 

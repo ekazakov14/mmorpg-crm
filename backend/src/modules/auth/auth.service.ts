@@ -12,7 +12,7 @@ export class AuthService {
     private readonly jwtService: JwtService,
   ) {}
 
-  public async login({ login, password }: LoginDto) {
+  public async login({ login, password }: LoginDto): Promise<LoginResponse> {
     let user: User;
     const userByUsername = await this.userService.findByUsername(login);
 
