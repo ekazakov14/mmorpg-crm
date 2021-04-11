@@ -1,26 +1,33 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import {
+  BrowserRouter as Router,
+  Route,
+  Redirect,
+} from 'react-router-dom';
+import { LoginPage } from './pages/LoginScreen';
+import { observer } from 'mobx-react';
+import AuthStore from './stores/AuthStore';
+import MainLayout from './components/layouts/MainLayout';
+import 'antd/dist/antd.css';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
-}
+const App = observer(() => {
+  if (AuthStore.isLoading) {
+    return <div>Preloader</div>;
+  } else {
+    if (!AuthStore.isLoggedIn) {
+      return (
+        <Router>
+          <Redirect to="/login" />
+          <Route path="/login"><LoginPage /></Route>
+        </Router>
+      );
+    } else {
+      return (
+        <Router>
+          <MainLayout />
+        </Router>
+      );
+    }
+  }
+});
 
 export default App;
