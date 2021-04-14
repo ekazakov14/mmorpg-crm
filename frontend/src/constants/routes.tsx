@@ -1,6 +1,6 @@
 import type React from 'react';
 import { UserOutlined } from '@ant-design/icons';
-import UsersList from '../components/lists/UsersList';
+import UsersTable from '../components/tables/UsersTable';
 
 type Route = {
   path: string,
@@ -13,7 +13,7 @@ const routes: Route[] = [
   {
     path: '/users',
     name: 'Пользователи',
-    component: UsersList,
+    component: UsersTable,
     icon: <UserOutlined />,
   },
 ];
