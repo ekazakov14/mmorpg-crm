@@ -51,7 +51,6 @@
     ]
   },
   "devDependencies": {
-    "node-sass": "^5.0.0",
     "styled-components": "^5.2.3"
   }
 }
