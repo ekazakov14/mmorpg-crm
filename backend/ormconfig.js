@@ -1,4 +1,4 @@
-require('dotenv').config();
+require('dotenv').config({ path: '../.env'});
 
 module.exports = [
   {
@@ -11,7 +11,7 @@ module.exports = [
     password: process.env.MYSQL_PASSWORD,
     entities: ["dist/**/*.entity{.ts,.js}"],
     synchronize: true,
-    migrations: ["dist/db/seeds/index.js"],
+    migrations: ["dist/src/db/seeds/index.js"],
     cli: {
       "migrationsDir": "src/db/seeds"
     }
