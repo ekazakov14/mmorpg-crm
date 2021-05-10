@@ -1,7 +1,7 @@
 import { MigrationInterface, QueryRunner } from 'typeorm';
 import * as dotenv from 'dotenv';
-import { UserSeeder } from '../../modules/users/db/seeds/users';
-import { WorkspaceSeeder } from '../../modules/workspaces/db/seeds/workspaces';
+import { UserSeeder } from './users';
+import { WorkspaceSeeder } from './workspaces';
 
 dotenv.config();
 

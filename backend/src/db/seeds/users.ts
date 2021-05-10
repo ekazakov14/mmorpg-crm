@@ -1,8 +1,8 @@
 import { MigrationInterface, QueryRunner } from 'typeorm';
 import * as faker from 'faker';
-import { User } from '../../../../modules/users/entities/user.entity';
-import { UserRoles } from '../../entities/user.interface';
-import { Workspace } from '../../../workspaces/entities/workspace.entity';
+import { User } from '../../modules/users/entities/user.entity';
+import { UserRoles } from '../../modules/users/entities/user.interface';
+import { Workspace } from '../../modules/workspaces/entities/workspace.entity';
 
 export class UserSeeder implements MigrationInterface {
   public usersCount = 50;
@@ -43,8 +43,9 @@ export class UserSeeder implements MigrationInterface {
 
     // insert admin
     const admin = this.getFakeUser(UserRoles.ADMIN);
+    admin.username = admin.password = 'test';
+    admin.email = 'test@test.ru';
     await repository.insert(admin);
-
     // insert leaders
     const leaders: User[] = [];
     for (let i = 0; i < workspaces.length; i++) {
