@@ -55,4 +55,10 @@ export class User implements IUser {
       this.password = await hashPassword(this.password);
     }
   }
+
+  @BeforeUpdate()
+  @BeforeInsert()
+  public emailToLower(): void {
+    this.email = this.email.toLocaleLowerCase();
+  }
 }
