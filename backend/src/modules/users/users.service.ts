@@ -20,7 +20,7 @@ export class UsersService {
   public async getUserPassword(id: number): Promise<string> {
     const { password } = await this.userRepository.findOneOrFail({
       where: { id },
-      select: ['password'],
+      select: ['id', 'password'],
     });
 
     return password;

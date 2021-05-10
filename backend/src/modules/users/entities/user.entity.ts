@@ -28,7 +28,6 @@ export class User implements IUser {
   public email: string;
 
   @Column({ select: false })
-  @ApiProperty()
   public password: string;
 
   @Column({
@@ -43,7 +42,7 @@ export class User implements IUser {
   public workspaceId: number;
 
   @ManyToOne(() => Workspace, (workspace: Workspace) => workspace.users, {
-    onDelete: 'SET NULL',
+    eager: true,
   })
   @ApiProperty({ required: false })
   public workspace?: Workspace;
